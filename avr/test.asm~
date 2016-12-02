@@ -1,0 +1,6 @@
+	.include "./m328Pdef.inc"
+	ldi r16,0x20
+	out DDRB, r16
+	out PortB, r16
+Start:
+	rjump Start
