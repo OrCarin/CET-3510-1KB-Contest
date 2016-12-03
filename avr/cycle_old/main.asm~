@@ -41,7 +41,7 @@ LOOP_LEFT:
 	brne PC+2		
 	rjmp LOOP_RIGHT
 	
-	lsl r18, 1		;Shift by 1 bit
+	lsl r18, 1		;Rotate by 1 bit
 	out PortB, r18		;Write HIGH to pins
 	
 	rjmp LOOP_LEFT		;Loop forever 
@@ -54,7 +54,7 @@ LOOP_RIGHT:
 	brne PC+2
 	rjmp LOOP_LEFT
 
-	lsr r18, 1		;Shift by 1 bit
+	lsr r18, 1		;Rotate by 1 bit
 	out PortB, r18		;Write HIGH to pins
 	
 	rjmp LOOP_RIGHT 	;Loop forever 

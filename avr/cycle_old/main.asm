@@ -33,32 +33,19 @@ RESET:
 	ldi r18, 0b00000001	;Turn on first LED
 	out PortB, r18		;Write HIGH to pins
 
-LOOP_LEFT:	
+LOOP:	
 	ldi r16, 30		;Delay for ~500ms
 	rcall DELAY
 	
-	cpi r18, 0b00010000	;Check for Bounce
-	brne PC+2		
-	rjmp LOOP_RIGHT
+	cpi r18, 0b00100000	;Reset
+	brlo PC+2
+	ldi r18, 0b00000001	;Turn on first LED
 	
+	out PortB, r18		;Write HIGH to pins
 	lsl r18, 1		;Shift by 1 bit
-	out PortB, r18		;Write HIGH to pins
 	
-	rjmp LOOP_LEFT		;Loop forever 
+	rjmp LOOP		;Loop forever 
 
-LOOP_RIGHT:
-	ldi r16, 30		;Delay for ~500ms
-	rcall DELAY
-
-	cpi r18, 0b00000001	;Check for Bounce
-	brne PC+2
-	rjmp LOOP_LEFT
-
-	lsr r18, 1		;Shift by 1 bit
-	out PortB, r18		;Write HIGH to pins
-	
-	rjmp LOOP_RIGHT 	;Loop forever 
-	
 DELAY:				;Wait about r16/60 seconds
 	clr countOF		;Reset overflow counter	
 	cp  countOF, r16	;Compare counter with r16
