@@ -1,5 +1,6 @@
 	;; cycle.asm
 	;; Cycles LEDs on pins 8-12
+	;; r18 is used to store which LED to light
 	
 	.nolist
 	.include "./m328Pdef.inc" ;Include definitions file
