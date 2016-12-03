@@ -15,11 +15,11 @@
 RESET:				  
 	ldi r16, 0b00000101	;Set clock scaling to 1/1024
 	out TCCR0B, r16		;See Datasheet 107-108 for more info
-	;; Since clock speed 20 MHz
-	;; Counter increments at 19.53 kHz
-	;; Therefore, counter overflows at about 76.29 Hz
+	;; Since clock speed 20 MHz,
+	;; counter will increment at about 19.53 kHz when scaled
+	;; Therefore, overflow counter increments at about 76.29 Hz
 	
-	ldi r16, 0b00000001	;Enable timer interrupts
+	ldi r16, 0b00000001	;Enable timer overflow interrupts
 	sts TIMSK0, r16		;See Datasheet 109 for more info
 	
 	sei			;Enable global interrupts
@@ -29,21 +29,36 @@ RESET:
 
 	ldi r16, 0b00011111	;Set pins 8-12 as output
 	out DDRB, r16
-LOOP:	
-	ldi r16, 0b00011111	;Load bits into r0
-	out PortB, r16		;Write HIGH to pins
-	
-	ldi r16, 30
+
+	ldi r18, 0b00000001	;Turn on first LED
+	out PortB, r18		;Write HIGH to pins
+
+LOOP_LEFT:	
+	ldi r16, 30		;Delay for ~500ms
 	rcall DELAY
 	
-	ldi r16, 0b00000000	;Load bits into r0
-	out PortB, r16		;Write HIGH to pins
+	cpi r18, 0b00010000	;Check for Bounce
+	brne PC+2		
+	rjmp LOOP_RIGHT
+	
+	lsl r18, 1		;Rotate by 1 bit
+	out PortB, r18		;Write HIGH to pins
+	
+	rjmp LOOP_LEFT		;Loop forever 
 
-	ldi r16, 30
+LOOP_RIGHT:
+	ldi r16, 30		;Delay for ~500ms
 	rcall DELAY
 
-	rjmp LOOP		;Loop forever 
+	cpi r18, 0b00000001	;Check for Bounce
+	brne PC+2
+	rjmp LOOP_LEFT
 
+	lsr r18, 1		;Rotate by 1 bit
+	out PortB, r18		;Write HIGH to pins
+	
+	rjmp LOOP_RIGHT 	;Loop forever 
+	
 DELAY:				;Wait about r16/60 seconds
 	clr countOF		;Reset overflow counter	
 	cp  countOF, r16	;Compare counter with r16
