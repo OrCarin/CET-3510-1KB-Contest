@@ -36,19 +36,19 @@ Init:
    ldi temp,0b11111110 ; load the `immediate' number to the temp register
                        ;  if it were just ld then the second argument
                        ;  would have to be a memory location instead
-   out    DDRD,temp    ; mv temp to DDRD, result is that PD0 is input
+   out    DDRC,temp    ; mv temp to DDRD, result is that PD0 is input
                        ;  and the rest are outputs
 
    clr    temp         ; all bits in temp are set to 0's
    out    PortB,temp   ; set all the bits (i.e. pins) in PortB to 0V
    ldi temp,0b00000001 ; load immediate number to temp
-   out    PortD,temp   ; move temp to PortD. PD0 has a pull up resistor 
+   out    PortC,temp   ; move temp to PortD. PD0 has a pull up resistor 
                        ;  (i.e. set to 5V) since it has a 1 in that bit
                        ;  the rest are 0V since 0's.
 ;======================
 ; Main body of program:
 Main:
-   in    temp,PinD     ; PinD holds the state of PortD, copy this to temp
+   in    temp,PinC     ; PinD holds the state of PortD, copy this to temp
                        ;  if the button is connected to PD0 this will be
                        ;  0 when the button is pushed, 1 otherwise since
                        ;  PD0 has a pull up resistor it's normally at 5V
