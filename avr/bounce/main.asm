@@ -20,6 +20,9 @@
 	
 	.org 0x0020		;Set jump for overflow interupt
 	rjmp OVERFLOW
+
+
+	
 SETUP:				  
 	ldi temp, 0b00000101	;Set clock scaling to 1/1024
 	out TCCR0B, r16		;See Datasheet 107-108 for more info
@@ -41,24 +44,30 @@ SETUP:
 	ldi cycLeds, 0b10000001 ;Initialize LEDs
 	ldi cycDelay, 30	;Initalize delay at ~500ms
 	clr cycOF		;Reset overflow counter
+
+
 	
 LOOP:				;Main loop
 	rcall LED_BOUNCE	;Check for bounce
 	rcall LED_CYCLE		;Update which LED's to light
 	rjmp LOOP		;Loop forever
 
+
+	
 LED_BOUNCE:		      ;Bounce if all LEDs off
-	cpi cycLeds, 0b10000000
-	breq LED_BOUNCE_R
-	cpi cycLeds, 0b00000000
+	cpi cycLeds, 0b10000000	;Check for bounce right
+	breq LED_BOUNCE_R	
+	cpi cycLeds, 0b00000000	;Check for bounce left
 	breq LED_BOUNCE_L
-	ret
+	ret			;Do nothing and return
 LED_BOUNCE_L:
-	ldi cycLeds, 0b10000001
-	ret
+	ldi cycLeds, 0b10000001	;Set direction to left
+	ret			;Return
 LED_BOUNCE_R:
-	ldi cycLeds, 0b00010000
-	ret
+	ldi cycLeds, 0b00010000	;Set direction to right
+	ret			;Return
+
+
 	
 LED_CYCLE:
 	cp  cycOF, cycDelay	;Do nothing until OF count > delay
@@ -77,19 +86,23 @@ LED_CYCLE_L:
 	rjmp LED_CYCLE_UPDATE
 LED_CYCLE_R:
 	lsr temp, 1		;Right shift
+
+
 	
 LED_CYCLE_UPDATE:
 	andi cycLeds, 0b11100000 ;Mask upper 3 bits
 	andi temp, 0b00011111	 ;Mask lower 5 bits
-	out PortB, temp		;Write output to pins
-	or   cycLeds, temp	 ;update Led states	
+	out PortB, temp		 ;Write output to pins
+	or   cycLeds, temp	 ;Update LED states	
 LED_CYCLE_RET:
 	ret
+
+
 	
 DELAY:				;Wait about r16/60 seconds
 	;; WARNING: halts program until delay is done
 	clr cycOF		;Reset overflow counter	
-	cp  cycOF, r16	;Compare counter with r16
+	cp  cycOF, r16		;Compare counter with r16
 	brlt PC-1		;Loop until counter > r16
 	ret			;Return
 	
