@@ -85,8 +85,6 @@ LED_CYCLE_UPDATE:
 	or   cycLeds, temp	 ;update Led states	
 LED_CYCLE_RET:
 	ret
-
-
 	
 DELAY:				;Wait about r16/60 seconds
 	;; WARNING: halts program until delay is done
