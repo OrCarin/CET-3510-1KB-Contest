@@ -86,8 +86,6 @@ LED_CYCLE_L:
 	rjmp LED_CYCLE_UPDATE
 LED_CYCLE_R:
 	lsr temp, 1		;Right shift
-
-
 	
 LED_CYCLE_UPDATE:
 	andi cycLeds, 0b11100000 ;Mask upper 3 bits
