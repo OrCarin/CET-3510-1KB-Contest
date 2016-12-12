@@ -67,10 +67,7 @@ RESET:
 	ldi countOF, 0b0000000	;Reset overflow counter
 
 LOOP:				;Main Loop
-	ldi leds1, 0b00000001	;Initialize led1 register
-	out DDRB, leds1 	;
-	;; rcall CYCLE
-	;; rcall CHARLIE
+	rcall DISPLAY1_8
 	rjmp LOOP		;Loop forever
 
 CYCLE:
