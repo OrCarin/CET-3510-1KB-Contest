@@ -1,5 +1,5 @@
 	;; charlie4to12.asm
-	;; Tests 12 Charlieplexed leds on pins 8-11
+	;; Tests 12 common cathode charlieplexed leds on pins 8-11
 	;; r18 and r19 is used to store which LEDs to light with bits 1-6
 	;;
 	;; Register Definitions
@@ -21,7 +21,7 @@
 	;; r19 bit5	ROW SELECTOR 1
 	;; r19 bit6	ROW SELECTOR 2
 	;; r19 bit7	ROW SELECTOR 3
-	;; r20		cycle speed
+	;; r20		cycle speed./
 	
 	.nolist
 	.include "./m328Pdef.inc" ;Include definitions file
