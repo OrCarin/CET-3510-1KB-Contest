@@ -40,12 +40,13 @@
 	.def disp2 = r22 	;Use r22 for dsiplay2
 	
 	.org 0x0000		;Set jump for reset
-	rjmp RESET
+	rjmp SETUP
 
 	
 	.org 0x0020		;Set jump for overflow interupt
 	rjmp OVERFLOW
-RESET:	
+SETUP:
+SETUP_CLOCK:
 	ldi temp, 0b00000101	;Set clock scaling to 1/1024
 	out TCCR0B, temp	;See Datasheet 107-108 for more info
 	;; Since clock speed 20 MHz,
@@ -57,49 +58,73 @@ RESET:
 	
 	sei			;Enable global interrupts
 	
-	ldi temp, 0b00000000	;Reset counter to zero
-	out TCNT0, temp
-
-	ldi leds1, 0b00000001	;Initialize led1 register
-	ldi leds2, 0b00000000	;Initialize led2 register
-
+	ldi countOF, 0b00000000	;Reset counters to zero
+	out TCNT0, countOF
+SETUP_LEDS:
+	ldi leds1, 0b00000001	;Initialize leds1 register
+	ldi leds2, 0b00000000	;Initialize leds2 register
+	ldi disp1, 0b00000000	;Initialize disp1 register
+	ldi disp2, 0b00000000	;Initialize disp1 register
+	
 	ldi cycDelay, 30	;Initalize delay at ~500ms
 	ldi countOF, 0b0000000	;Reset overflow counter
 
+	;; Initialize outputs
+	ldi leds1,  0b00000000
+	ldi leds2,  0b00000000
+	ldi disp1,  0b00000000
+	ldi disp2,  0b00000000
+
+	ldi leds1,  0b00000000
+	
+	START:	
+	ori  leds1, 0b00000001	;Set selector bit for leds1
+
 LOOP:				;Main Loop
-	rcall DISPLAY1_8
+	rcall CYCLE
+	rcall CHARLIE
 	rjmp LOOP		;Loop forever
 
 CYCLE:
+	cp countOF, cycDelay	;Do nothing until OF counter > delay
+	brlo CYCLE_RETURN
+CYCLE_RETURN:	
 	ret
-	
 
 CHARLIE:			;Function to control charlieplexed LEDS
+	
 	;; Switch row
 	SBRC leds1, 0
 	rjmp CHARLIE_ROW0
 	SBRC leds2, 1
 	rjmp CHARLIE_ROW1
-	SBRC leds2, 1
-	rjmp CHARLIE_ROW1
-	SBRC leds2, 1
-	rjmp CHARLIE_ROW1
-
+	SBRC disp1, 2
+	rjmp CHARLIE_ROW2
+	SBRC disp2, 3
+	rjmp CHARLIE_ROW3
 	ret
 CHARLIE_ROW0:
+	out  DDRD,  leds1
 	andi leds1, 0b11111110	;Clear selector bit for leds1
+	out  PortD, leds1
 	ori  leds2, 0b00000010	;Set selector bit for leds2
 	ret
 CHARLIE_ROW1:
+	out  DDRD,  leds2
 	andi leds2, 0b11111101	;Clear selector bit for leds2
+	out  PortD, leds2
 	ori  disp1, 0b00000100	;Set selector bit for disp1
 	ret
 CHARLIE_ROW2:
+	out  DDRD,  disp1
 	andi disp1, 0b11111011	;Clear selector bit for disp1
+	out  PortD, disp1	
 	ori  disp2, 0b00001000	;Set selector bit for disp2
 	ret
 CHARLIE_ROW3:
+	out  DDRD,  disp2
 	andi disp2, 0b11110111	;Clear selector bit for disp2
+	out  PortD, disp2
 	ori  leds1, 0b00000001	;Set selector bit for leds1
 	ret
 	
