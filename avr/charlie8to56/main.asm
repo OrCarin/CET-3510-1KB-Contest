@@ -188,45 +188,45 @@ DISPLAY1_9:
 
 	
 DISPLAY2_N:	
-	ldi disp1, 0b00001000
+	ldi disp2, 0b00001000
 	ret
 
 DISPLAY2_0:
-	ldi disp1, 0b11111110
+	ldi disp2, 0b11111110
 	ret
 
 DISPLAY2_1:
-	ldi disp1, 0b01101000
+	ldi disp2, 0b01101000
 	ret
 
 DISPLAY2_2:
-	ldi disp1, 0b11011101
+	ldi disp2, 0b11011101
 	ret
 	
 DISPLAY2_3:
-	ldi disp1, 0b11111001
+	ldi disp2, 0b11111001
 	ret
 
 DISPLAY2_4:
-	ldi disp1, 0b01101011
+	ldi disp2, 0b01101011
 	ret
 
 DISPLAY2_5:
-	ldi disp1, 0b10111011
+	ldi disp2, 0b10111011
 	ret
 
 DISPLAY2_6:
-	ldi disp1, 0b10111111
+	ldi disp2, 0b10111111
 	ret
 
 DISPLAY2_7:
-	ldi disp1, 0b11101000
+	ldi disp2, 0b11101000
 	ret
 
 DISPLAY2_8:
-	ldi disp1, 0b11111111
+	ldi disp2, 0b11111111
 	ret
 
 DISPLAY2_9:
-	ldi disp1, 0b11101011
+	ldi disp2, 0b11101011
 	ret
