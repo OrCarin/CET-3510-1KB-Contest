@@ -36,7 +36,7 @@ SETUP:
 	out TCNT0, temp
 
 	ldi temp, 0b00011111	;Set pins 8-12 as output
-	out DDRB, temp
+	out DDRB, templibreoffice 
 
 	ldi cycLeds, 0b10000001 ;Initialize LEDs
 	ldi cycDelay, 30	;Initalize delay at ~500ms

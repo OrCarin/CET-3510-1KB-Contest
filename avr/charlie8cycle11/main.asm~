@@ -64,19 +64,25 @@ SETUP_CLOCK:
 	ldi countOF, 0b00000000	;Reset counters to zero
 	out TCNT0, countOF
 SETUP_LEDS:
-	ldi leds1, 0b00000001	;Initialize leds1 register (selected)
+	ldi leds1, 0b00000001	;Initialize leds1 register
 	ldi leds2, 0b00000000	;Initialize leds2 register
 	ldi disp1, 0b00000000	;Initialize disp1 register
 	ldi disp2, 0b00000000	;Initialize disp1 register
 	
 	ldi countOF, 0b0000000	;Reset overflow counter
 
+	;; Initialize outputs
+	ldi leds1, 0b00000001
+	ldi leds2, 0b00000000
+	ldi disp1, 0b00000000
+	ldi disp2, 0b00000000
+
 	ldi disp1, 0b11111011	;Turn on all displays for testing
 	ldi disp2, 0b11110111
-SETUP_GAME:			;Initialize game variables
+SETUP_GAME:
 	ldi cycDelay, 60	;Initalize delay at ~500ms
-	ldi ball,  0b00000000	;Initialize ball at position 0
-	ldi score, 0b00000000	;Initialize score to 0
+	ldi ball,  0b00000000	;Initialize game variables
+	ldi score, 0b00000000	;Initialize game variables
 
 LOOP:				;Main Loop
 	rcall CYCLE
@@ -112,7 +118,7 @@ BALL_JUMP_TABLE:
 	lsl temp, 1		;Multiply by 2, since each case is 2 bytes
 	add ZL, temp		;Add to Z register
 	ijmp
-BALL00:	nop			;increment right player score here
+BALL00:	nop
 	ret
 BALL01:	ori leds1, 0b00000010
 	ret
@@ -136,7 +142,7 @@ BALL10:	ori leds2, 0b00001000
 	ret
 BALL11:	ori leds2, 0b00010000
 	ret
-BALL12:	nop			;increment left player score here
+BALL12:	nop
 	ret
 CYCLE_RETURN:	
 	ret
