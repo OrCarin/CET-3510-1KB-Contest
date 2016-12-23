@@ -70,9 +70,9 @@ SETUP_LEDS:
 	ldi disp2, 0b00000000	;Initialize disp1 register
 	
 	ldi countOF, 0b0000000	;Reset overflow counter
-
-	ldi disp1, 0b11111011	;Turn on all displays for testing
-	ldi disp2, 0b11110111
+	
+	;; ldi disp1, 0b11111011	;Turn on all displays for testing
+	;; ldi disp2, 0b11110111
 SETUP_GAME:			;Initialize game variables
 	ldi cycDelay, 60	;Initalize delay at ~500ms
 	ldi ball,  0b00000000	;Initialize ball at position 0
@@ -81,7 +81,7 @@ SETUP_GAME:			;Initialize game variables
 LOOP:				;Main Loop
 	rcall CYCLE
 	rcall CHARLIE
-
+	rcall JUMP_SCORE1	;Display score1
 	rjmp LOOP		;Loop forever
 
 CYCLE:				;Work in progress
@@ -112,7 +112,7 @@ BALL_JUMP_TABLE:
 	lsl temp, 1		;Multiply by 2, since each case is 2 bytes
 	add ZL, temp		;Add to Z register
 	ijmp
-BALL00:	nop			;increment right player score here
+BALL00:	inc score		;increment right player score here
 	ret
 BALL01:	ori leds1, 0b00000010
 	ret
@@ -191,92 +191,103 @@ OVERFLOW:
 	inc countOF
 	reti			;Return after interupt
 
+JUMP_SCORE1:
+	andi disp1, 0b00000100	;Clear displays
+	ldi ZL, low(DISPLAY1_0)
+	ldi ZH, high(DISPLAY1_0)
+
+	mov temp, score
+	lsl temp, 1
+	add ZL, temp
+	ijmp
+	
 DISPLAY1_N:	
-	ldi disp1, 0b00000100
+	ori disp1, 0b00000000
 	ret
 
 DISPLAY1_0:
-	ldi disp1, 0b11111110
+	ori disp1, 0b11111010
 	ret
 
 DISPLAY1_1:
-	ldi disp1, 0b01100100
+	ori disp1, 0b01100000
 	ret
 
 DISPLAY1_2:
-	ldi disp1, 0b11011101
+	ori disp1, 0b11011001
 	ret
 	
 DISPLAY1_3:
-	ldi disp1, 0b11110101
+	ori disp1, 0b11110001
 	ret
 
 DISPLAY1_4:
-	ldi disp1, 0b01100111
+	ori disp1, 0b01100011
 	ret
 
 DISPLAY1_5:
-	ldi disp1, 0b10110111
+	ori disp1, 0b10110011
 	ret
 
 DISPLAY1_6:
-	ldi disp1, 0b10111111
+	ori disp1, 0b10111011
 	ret
 
 DISPLAY1_7:
-	ldi disp1, 0b11100100
+	ori disp1, 0b11100000
 	ret
 
 DISPLAY1_8:
-	ldi disp1, 0b11111111
+	ori disp1, 0b11111011
 	ret
 
 DISPLAY1_9:
-	ldi disp1, 0b11100111
+	ori disp1, 0b11100011
 	ret
+
 
 
 	
 DISPLAY2_N:	
-	ldi disp2, 0b00001000
+	ori disp2, 0b00000000
 	ret
 
 DISPLAY2_0:
-	ldi disp2, 0b11111110
+	ori disp2, 0b11110110
 	ret
 
 DISPLAY2_1:
-	ldi disp2, 0b01101000
+	ori disp2, 0b01100000
 	ret
 
 DISPLAY2_2:
-	ldi disp2, 0b11011101
+	ori disp2, 0b11010101
 	ret
 	
 DISPLAY2_3:
-	ldi disp2, 0b11111001
+	ori disp2, 0b11110001
 	ret
 
 DISPLAY2_4:
-	ldi disp2, 0b01101011
+	ori disp2, 0b01100011
 	ret
 
 DISPLAY2_5:
-	ldi disp2, 0b10111011
+	ori disp2, 0b10110011
 	ret
 
 DISPLAY2_6:
-	ldi disp2, 0b10111111
+	ori disp2, 0b10110111
 	ret
 
 DISPLAY2_7:
-	ldi disp2, 0b11101000
+	ori disp2, 0b11100000
 	ret
 
 DISPLAY2_8:
-	ldi disp2, 0b11111111
+	ori disp2, 0b11110111
 	ret
 
 DISPLAY2_9:
-	ldi disp2, 0b11101011
+	ori disp2, 0b11100011
 	ret

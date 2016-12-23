@@ -64,4 +64,218 @@ avrdude: ser_open(): can't open device "/dev/ttyACM0": No such file or directory
 
 avrdude done.  Thank you.
 
-justin@macbookpro-sirius:~/Desktop/CET-3510-1KB-Contest/avr/displayTest$ 
+justin@macbookpro-sirius:~/Desktop/CET-3510-1KB-Contest/avr/displayTest$ ./compile.sh 
+AVRA: advanced AVR macro assembler Version 1.3.0 Build 1 (8 May 2010)
+Copyright (C) 1998-2010. Check out README file for more info
+
+   AVRA is an open source assembler for Atmel AVR microcontroller family
+   It can be used as a replacement of 'AVRASM32.EXE' the original assembler
+   shipped with AVR Studio. We do not guarantee full compatibility for avra.
+
+   AVRA comes with NO WARRANTY, to the extent permitted by law.
+   You may redistribute copies of avra under the terms
+   of the GNU General Public License.
+   For more information about these matters, see the files named COPYING.
+
+Pass 1...
+./m328Pdef.inc(44) : PRAGMA directives currently ignored
+Pass 2...
+./m328Pdef.inc(44) : PRAGMA directives currently ignored
+done
+
+Used memory blocks:
+   Code      :  Start = 0x0000, End = 0x0000, Length = 0x0001
+   Code      :  Start = 0x0020, End = 0x00CE, Length = 0x00AF
+
+Assembly complete with no errors.
+Segment usage:
+   Code      :       176 words (352 bytes)
+   Data      :         0 bytes
+   EEPROM    :         0 bytes
+justin@macbookpro-sirius:~/Desktop/CET-3510-1KB-Contest/avr/displayTest$ ./upload.sh 
+
+avrdude: AVR device initialized and ready to accept instructions
+
+Reading | ################################################## | 100% 0.01s
+
+avrdude: Device signature = 0x000000 (retrying)
+
+Reading | ################################################## | 100% 0.01s
+
+avrdude: Device signature = 0x000000 (retrying)
+
+Reading | ################################################## | 100% 0.01s
+
+avrdude: Device signature = 0x000000
+avrdude: Yikes!  Invalid device signature.
+avrdude: Expected signature for ATmega328P is 1E 95 0F
+avrdude: NOTE: "flash" memory has been specified, an erase cycle will be performed
+         To disable this feature, specify the -D option.
+avrdude: erasing chip
+avrdude: reading input file "main.hex"
+avrdude: input file main.hex auto detected as Intel Hex
+avrdude: writing flash (414 bytes):
+
+Writing | ################################################## | 100% 0.08s
+
+avrdude: 414 bytes of flash written
+avrdude: verifying flash memory against main.hex:
+avrdude: load data flash data from input file main.hex:
+avrdude: input file main.hex auto detected as Intel Hex
+avrdude: input file main.hex contains 414 bytes
+avrdude: reading on-chip flash data:
+
+Reading | ################################################## | 100% 0.07s
+
+avrdude: verifying ...
+avrdude: 414 bytes of flash verified
+
+avrdude: safemode: Fuses OK (E:00, H:00, L:00)
+
+avrdude done.  Thank you.
+
+justin@macbookpro-sirius:~/Desktop/CET-3510-1KB-Contest/avr/displayTest$ ls
+compile.sh  m328Pdef.inc  main.asm  main.asm~  main.cof  main.eep.hex  main.hex  main.obj  *shell*  #*shell*#  upload.sh
+justin@macbookpro-sirius:~/Desktop/CET-3510-1KB-Contest/avr/displayTest$ cd ..
+justin@macbookpro-sirius:~/Desktop/CET-3510-1KB-Contest/avr$ cd charlie8to56/
+justin@macbookpro-sirius:~/Desktop/CET-3510-1KB-Contest/avr/charlie8to56$ ./compile.sh 
+AVRA: advanced AVR macro assembler Version 1.3.0 Build 1 (8 May 2010)
+Copyright (C) 1998-2010. Check out README file for more info
+
+   AVRA is an open source assembler for Atmel AVR microcontroller family
+   It can be used as a replacement of 'AVRASM32.EXE' the original assembler
+   shipped with AVR Studio. We do not guarantee full compatibility for avra.
+
+   AVRA comes with NO WARRANTY, to the extent permitted by law.
+   You may redistribute copies of avra under the terms
+   of the GNU General Public License.
+   For more information about these matters, see the files named COPYING.
+
+Pass 1...
+./m328Pdef.inc(44) : PRAGMA directives currently ignored
+Pass 2...
+./m328Pdef.inc(44) : PRAGMA directives currently ignored
+done
+
+Used memory blocks:
+   Code      :  Start = 0x0000, End = 0x0000, Length = 0x0001
+   Code      :  Start = 0x0020, End = 0x00B4, Length = 0x0095
+
+Assembly complete with no errors.
+Segment usage:
+   Code      :       150 words (300 bytes)
+   Data      :         0 bytes
+   EEPROM    :         0 bytes
+justin@macbookpro-sirius:~/Desktop/CET-3510-1KB-Contest/avr/charlie8to56$ ./upload.sh 
+
+avrdude: AVR device initialized and ready to accept instructions
+
+Reading | ################################################## | 100% 0.01s
+
+avrdude: Device signature = 0x000000 (retrying)
+
+Reading | ################################################## | 100% 0.01s
+
+avrdude: Device signature = 0x000000 (retrying)
+
+Reading | ################################################## | 100% 0.01s
+
+avrdude: Device signature = 0x000000
+avrdude: Yikes!  Invalid device signature.
+avrdude: Expected signature for ATmega328P is 1E 95 0F
+avrdude: NOTE: "flash" memory has been specified, an erase cycle will be performed
+         To disable this feature, specify the -D option.
+avrdude: erasing chip
+avrdude: reading input file "main.hex"
+avrdude: input file main.hex auto detected as Intel Hex
+avrdude: writing flash (362 bytes):
+
+Writing | ################################################## | 100% 0.06s
+
+avrdude: 362 bytes of flash written
+avrdude: verifying flash memory against main.hex:
+avrdude: load data flash data from input file main.hex:
+avrdude: input file main.hex auto detected as Intel Hex
+avrdude: input file main.hex contains 362 bytes
+avrdude: reading on-chip flash data:
+
+Reading | ################################################## | 100% 0.05s
+
+avrdude: verifying ...
+avrdude: 362 bytes of flash verified
+
+avrdude: safemode: Fuses OK (E:00, H:00, L:00)
+
+avrdude done.  Thank you.
+
+justin@macbookpro-sirius:~/Desktop/CET-3510-1KB-Contest/avr/charlie8to56$ ./compile.sh 
+AVRA: advanced AVR macro assembler Version 1.3.0 Build 1 (8 May 2010)
+Copyright (C) 1998-2010. Check out README file for more info
+
+   AVRA is an open source assembler for Atmel AVR microcontroller family
+   It can be used as a replacement of 'AVRASM32.EXE' the original assembler
+   shipped with AVR Studio. We do not guarantee full compatibility for avra.
+
+   AVRA comes with NO WARRANTY, to the extent permitted by law.
+   You may redistribute copies of avra under the terms
+   of the GNU General Public License.
+   For more information about these matters, see the files named COPYING.
+
+Pass 1...
+./m328Pdef.inc(44) : PRAGMA directives currently ignored
+Pass 2...
+./m328Pdef.inc(44) : PRAGMA directives currently ignored
+done
+
+Used memory blocks:
+   Code      :  Start = 0x0000, End = 0x0000, Length = 0x0001
+   Code      :  Start = 0x0020, End = 0x00B2, Length = 0x0093
+
+Assembly complete with no errors.
+Segment usage:
+   Code      :       148 words (296 bytes)
+   Data      :         0 bytes
+   EEPROM    :         0 bytes
+justin@macbookpro-sirius:~/Desktop/CET-3510-1KB-Contest/avr/charlie8to56$ ./upload.sh 
+
+avrdude: AVR device initialized and ready to accept instructions
+
+Reading | ################################################## | 100% 0.01s
+
+avrdude: Device signature = 0x000000 (retrying)
+
+Reading | ################################################## | 100% 0.01s
+
+avrdude: Device signature = 0x000000 (retrying)
+
+Reading | ################################################## | 100% 0.01s
+
+avrdude: Device signature = 0x000000
+avrdude: Yikes!  Invalid device signature.
+avrdude: Expected signature for ATmega328P is 1E 95 0F
+avrdude: NOTE: "flash" memory has been specified, an erase cycle will be performed
+         To disable this feature, specify the -D option.
+avrdude: erasing chip
+avrdude: reading input file "main.hex"
+avrdude: input file main.hex auto detected as Intel Hex
+avrdude: writing flash (358 bytes):
+
+Writing | ################################################## | 100% 0.07s
+
+avrdude: 358 bytes of flash written
+avrdude: verifying flash memory against main.hex:
+avrdude: load data flash data from input file main.hex:
+avrdude: input file main.hex auto detected as Intel Hex
+avrdude: input file main.hex contains 358 bytes
+avrdude: reading on-chip flash data:
+
+Reading | ################################################## | 100% 0.05s
+
+avrdude: verifying ...
+avrdude: 358 bytes of flash verified
+
+avrdude: safemode: Fuses OK (E:00, H:00, L:00)
+
+avrdude done.  Thank you.
+
+justin@macbookpro-sirius:~/Desktop/CET-3510-1KB-Contest/avr/charlie8to56$ 
