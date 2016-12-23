@@ -87,10 +87,9 @@ SETUP_GAME:
 
 LOOP:				;Main Loop
 	;; rcall CYCLE
-	;; Call display
-	rcall DISPLAY_TEST
+	rcall JUMP_SCORE1	;Display score1
 	rcall CHARLIE
-
+	rcall DISPLAY_TEST
 	rjmp LOOP		;Loop forever
 
 DISPLAY_TEST:			;Test the 7 segment displays
@@ -106,7 +105,7 @@ DISPLAY_TEST:			;Test the 7 segment displays
 	lsl temp, 1
 	or  leds1, temp
 
-	cpi score, 10
+	cpi score, 9
 	brlo DISPLAY_TEST_INC
 	ldi score, 0
 	ret
@@ -216,53 +215,64 @@ DELAY:				;Wait about r16/60 seconds
 	brlt PC-1		;Loop until counter > temp
 	ret			;Return
 
-	
 OVERFLOW:
 	inc countOF
 	reti			;Return after interupt
 
+JUMP_SCORE1:
+	andi disp1, 0b00000100	;Clear displays
+	ldi ZL, low(DISPLAY1_0)
+	ldi ZH, high(DISPLAY1_0)
+
+	mov temp, score
+	lsl temp, 1
+	add ZL, temp
+	ijmp
+
+
+	
 DISPLAY1_N:	
-	ldi disp1, 0b00000100
+	ori disp1, 0b00000000
 	ret
 
 DISPLAY1_0:
-	ldi disp1, 0b11111110
+	ori disp1, 0b11111010
 	ret
 
 DISPLAY1_1:
-	ldi disp1, 0b01100100
+	ori disp1, 0b01100000
 	ret
 
 DISPLAY1_2:
-	ldi disp1, 0b11011101
+	ori disp1, 0b11011001
 	ret
 	
 DISPLAY1_3:
-	ldi disp1, 0b11110101
+	ori disp1, 0b11110001
 	ret
 
 DISPLAY1_4:
-	ldi disp1, 0b01100111
+	ori disp1, 0b01100011
 	ret
 
 DISPLAY1_5:
-	ldi disp1, 0b10110111
+	ori disp1, 0b10110011
 	ret
 
 DISPLAY1_6:
-	ldi disp1, 0b10111111
+	ori disp1, 0b10111011
 	ret
 
 DISPLAY1_7:
-	ldi disp1, 0b11100100
+	ori disp1, 0b11100000
 	ret
 
 DISPLAY1_8:
-	ldi disp1, 0b11111111
+	ori disp1, 0b11111011
 	ret
 
 DISPLAY1_9:
-	ldi disp1, 0b11100111
+	ori disp1, 0b11100011
 	ret
 
 
