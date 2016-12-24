@@ -56,52 +56,52 @@ JUMP_SCORE2
 ldi ZL, low(DISPLAY2_0)
 ldi ZH, high(DISPLAY2_0)
 
-mov  temp, score2
+mov  temp, score2 
 lsl temp, 1
 add ZL, temp
 ijmp
 
-DISPLAY1_N:	
+DISPLAY2_N:	
 	ldi disp1, 0b00000100
 	ret
 
-DISPLAY1_0:
+DISPLAY2_0:
 	ldi disp1, 0b11111110
 	ret
 
-DISPLAY1_1:
+DISPLAY2_1:
 	ldi disp1, 0b01100100
 	ret
  
-DISPLAY1_2:
+DISPLAY2_2:
 	ldi disp1, 0b11011101
 	ret
 	
-DISPLAY1_3:
+DISPLAY2_3:
 	ldi disp1, 0b11110101
 	ret
 
-DISPLAY1_4:
+DISPLAY2_4:
 	ldi disp1, 0b01100111
 	ret
 
-DISPLAY1_5:
+DISPLAY2_5:
 	ldi disp1, 0b10110111
 	ret
 
-DISPLAY1_6:
+DISPLAY2_6:
 	ldi disp1, 0b10111111
 	ret
 
-DISPLAY1_7:
+DISPLAY2_7:
 	ldi disp1, 0b11100100
 	ret
 
-DISPLAY1_8:
+DISPLAY2_8:
 	ldi disp1, 0b11111111
 	ret
 
-DISPLAY1_9:
+DISPLAY2_9:
 	ldi disp1, 0b11100111
 	ret
 
