@@ -40,7 +40,8 @@
 	.def disp2 = r22 	;Use r22 for dsiplay2
 
 	.def ball = r23		;Use r23 to store postion of ball 
-	.def score = r24	;Use r24 to store the score
+	.def score1 = r24	;Use r24 to store the score1
+	.def score2 = r25	;Use r25 to store the score2
 	
 	.org 0x0000		;Set jump for reset
 	rjmp SETUP
@@ -73,17 +74,34 @@ SETUP_LEDS:
 	
 	;; ldi disp1, 0b11111011	;Turn on all displays for testing
 	;; ldi disp2, 0b11110111
+SETUP_BUTT:
+	ldi temp,0b00000000
+	out DDRC,temp
+	ldi temp,0b00000110
+	out PortC,temp
 SETUP_GAME:			;Initialize game variables
 	ldi cycDelay, 60	;Initalize delay at ~500ms
 	ldi ball,  0b00000000	;Initialize ball at position 0
-	ldi score, 0b00000000	;Initialize score to 0
+	ldi score1, 0b00000000	;Initialize score1 to 0
+	ldi score2, 0b00000000	;Initialize score2 to 0
+
 
 LOOP:				;Main Loop
 	rcall CYCLE
-	rcall CHARLIE
 	rcall JUMP_SCORE1	;Display score1
+	rcall JUMP_SCORE2	;Display score2
+	rcall CHARLIE
+	rcall BUTT_CHECK
 	rjmp LOOP		;Loop forever
 
+BUTT_CHECK:
+	andi leds2, 0b00011111
+	in   temp, PinC
+	swap temp
+	andi temp, 0b01100000
+	or   leds2, temp
+	ret
+	
 CYCLE:				;Work in progress
 	cp countOF, cycDelay	;Do nothing until OF counter > delay
 	brlo CYCLE_RETURN
@@ -98,7 +116,7 @@ CYCLE:				;Work in progress
 
 	;; Load which leds to light
 	andi leds1, 0b00000001	;Clear leds1
-	andi leds2, 0b00000010	;Clear leds2
+	andi leds2, 0b11100010	;Clear leds2
 	;; Load to Z register for indirect jumping
 	ldi ZH, high(BALL00)
 	ldi ZL,  low(BALL00)
@@ -112,7 +130,7 @@ BALL_JUMP_TABLE:
 	lsl temp, 1		;Multiply by 2, since each case is 2 bytes
 	add ZL, temp		;Add to Z register
 	ijmp
-BALL00:	inc score		;increment right player score here
+BALL00:	inc score2		;increment right player score here
 	ret
 BALL01:	ori leds1, 0b00000010
 	ret
@@ -136,7 +154,7 @@ BALL10:	ori leds2, 0b00001000
 	ret
 BALL11:	ori leds2, 0b00010000
 	ret
-BALL12:	nop			;increment left player score here
+BALL12:	inc score1		;increment left player score here
 	ret
 CYCLE_RETURN:	
 	ret
@@ -192,11 +210,11 @@ OVERFLOW:
 	reti			;Return after interupt
 
 JUMP_SCORE1:
-	andi disp1, 0b00000100	;Clear displays
+	andi disp1, 0b00000100	;Clear display1
 	ldi ZL, low(DISPLAY1_0)
 	ldi ZH, high(DISPLAY1_0)
 
-	mov temp, score
+	mov temp, score1
 	lsl temp, 1
 	add ZL, temp
 	ijmp
@@ -246,6 +264,15 @@ DISPLAY1_9:
 	ret
 
 
+JUMP_SCORE2:
+	andi disp2, 0b00001000	;Clear display2
+	ldi ZL, low(DISPLAY2_0)
+	ldi ZH, high(DISPLAY2_0)
+
+	mov temp, score2
+	lsl temp, 1
+	add ZL, temp
+	ijmp
 
 	
 DISPLAY2_N:	
